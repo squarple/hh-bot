@@ -1,0 +1,4 @@
+my_reviews_url : "https://review.hhdev.ru/api/homeworks/{homework_id}/reviews/my-reviews"
+reviews_to_do_url : "https://review.hhdev.ru/api/homeworks/{homework_id}/reviews/reviews-to-do"
+auth_url : "https://review.hhdev.ru/api/auth/sign-in"
+homeworks_url : "https://review.hhdev.ru/api/homeworks"
