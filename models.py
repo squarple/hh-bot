@@ -84,8 +84,3 @@ def json_to_user(json : dict) -> User :
       gitlabUsername  = json.get('gitlabUsername'),
       mmUsername      = json.get('mmUsername'),
     )
-
-
-
-"""   def __str__(self) -> str:
-    return json.dumps(asdict(self), indent=2) """
