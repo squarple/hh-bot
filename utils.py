@@ -1,10 +1,6 @@
 from datetime import datetime
 from telebot import types
-from telebot import types
-import logging
-import requests
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+from models import User, Homework, Review
 
 def parse_date(date_str):
   if date_str == 'N/A':
@@ -18,7 +14,7 @@ def parse_date(date_str):
   except ValueError:
     return 'N/A'
 
-def get_headers(user) -> dict:
+def get_headers(user:User) -> dict:
   return { 'Authorization': f'Bearer {user.accessToken}' }
 
 def send_error_message(bot, chat_id, response):
@@ -36,15 +32,18 @@ def create_keyboard():
     keyboard.add(types.KeyboardButton(text))
   return keyboard
 
-def fetch_data(url: str, headers: dict = None):
-  try:
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-      return response.json()
-    else:
-      logging.error(f"Error fetching data from {url}: {response.status_code}")
-      print(response.text)
-      return None
-  except Exception as e:
-    logging.error(f"Exception occurred: {e}")
-    return None
+def homework_to_message(hw:Homework):
+  return f"<b>{hw.name}</b>\n" \
+          f"<a href='{hw.repositoryLink}'>Repo Link</a>\n" \
+          f"Deadline: {parse_date(hw.completionDeadline)}\n" \
+          f"Status: <b>{hw.status}</b>\n\n"
+
+def review_to_message(r:Review):
+  message_to_send = f"reviewId: {r.reviewId}\n"
+  message_to_send += f"Status: <b>{r.status}</b>\n"
+  if r.reviewAttempts and len(r.reviewAttempts) > 0:
+    resolution = r.reviewAttempts[0].get('resolution', 'Нет комментария')
+    message_to_send += f"Комментарий: <i>{resolution}</i>\n\n"
+  else:
+    message_to_send += "\n"
+  return message_to_send

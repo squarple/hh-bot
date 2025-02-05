@@ -1,5 +1,14 @@
-from dataclasses import dataclass, asdict
-import json
+from dataclasses import dataclass
+
+class BotUser:
+  def __init__(self, chat_id: int, username: str, password: str):
+    self.chat_id = chat_id
+    self.username = username
+    self.password = password
+
+  def __repr__(self):
+    return f"bot_user(chat_id={self.chat_id}, username='{self.username}', password='{self.password}')"
+
 
 @dataclass
 class User :
