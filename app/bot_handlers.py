@@ -15,7 +15,7 @@ load_dotenv()
 token = os.getenv('AUTH_TOKEN')
 bot = TeleBot(token)
 
-with open('hhdev_api.yaml', 'r', encoding='utf-8') as config_file:
+with open('resources/hhdev_api.yaml', 'r', encoding='utf-8') as config_file:
   hhdev_api = yaml.safe_load(config_file)
 
 def start(message):
